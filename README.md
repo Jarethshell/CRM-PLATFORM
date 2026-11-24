@@ -200,3 +200,13 @@ This project is intended for educational practice, classroom demonstrations, and
 ## License
 
 This project is an academic capstone platform. Add the project’s final license and author information before publishing the repository publicly.
+
+
+
+  <img width="1920" height="1080" alt="Screenshot From 2026-11-24 17-46-25" src="https://github.com/user-attachments/assets/13563c05-86ff-4d34-8342-ecc88d9f4428" />
+  <img width="1920" height="928" alt="Screenshot From 2026-11-24 17-46-02" src="https://github.com/user-attachments/assets/29b41b76-275d-4c07-b6de-2e4d2874c347" />
+
+
+
+
+
