@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform Admin | CCS ProCRM</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a href="/index.html?signin=true" class="brand" title="Back to Sign In"><h2>CCS ProCRM</h2><span>Platform Admin Panel</span></a>
+      <button class="nav-btn active" data-view="view-teachers">Manage Teachers</button>
+      <button class="nav-btn" data-view="view-admin-students">Manage Students</button>
+      <button class="nav-btn" data-view="view-smtp">Email (Gmail SMTP) Setup</button>
+      <button class="nav-btn" data-view="view-semester">End-of-Semester Cleanup</button>
+      <div class="sidebar-footer">
+        <div style="font-size:0.85rem;margin-bottom:10px;"><strong>Platform Admin</strong><br /><span style="color:#94a3b8;font-size:0.78rem;">Grade 11 CCS Crosstrack</span></div>
+        <button id="btn-logout" class="btn btn-outline btn-full" style="background:#1e293b;color:#fff;border-color:#334155;">Sign Out</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <strong style="font-size:1.05rem;">System Administration & Semester Management</strong>
+        <button id="btn-admin-refresh" class="btn btn-outline">Refresh Data</button>
+      </header>
+      <div class="content">
+        <section id="view-teachers">
+          <div class="card">
+            <h3 class="card-title">Registered Teacher Accounts</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Teacher Name</th><th>Email</th><th>Department</th><th>Registered</th><th>Action</th></tr></thead>
+                <tbody id="admin-teachers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-admin-students" class="hidden">
+          <div class="card">
+            <h3 class="card-title">Registered Student Accounts</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Student Name</th><th>Email</th><th>Section</th><th>Registered</th><th>Action</th></tr></thead>
+                <tbody id="admin-students-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-smtp" class="hidden">
+          <div class="card" style="max-width:600px;">
+            <h3 class="card-title">Live Gmail SMTP Configuration (For PDF Reports)</h3>
+            <p style="font-size:0.88rem;color:var(--muted);">Status: <strong id="smtp-status-text">Checking...</strong></p>
+            <form id="form-smtp">
+              <div class="form-group"><label>Sender Gmail Address</label><input id="smtp-user" type="email" class="form-control" placeholder="ccscrosstrack@gmail.com" required /></div>
+              <div class="form-group"><label>Google 16-Character App Password</label><input id="smtp-pass" type="password" class="form-control" placeholder="xxxx xxxx xxxx xxxx" required /></div>
+              <button type="submit" class="btn btn-primary">Save Gmail Settings</button>
+            </form>
+            <hr style="border:none;border-top:1px solid var(--border);margin:18px 0;" />
+            <div style="display:flex;gap:8px;">
+              <input id="smtp-test-email" type="email" class="form-control" placeholder="Recipient email to test..." />
+              <button id="btn-test-smtp" type="button" class="btn btn-success">Send Test Email</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-semester" class="hidden">
+          <div class="card" style="max-width:650px;">
+            <h3 class="card-title">End-of-Semester Account & Data Cleanup</h3>
+            <p style="font-size:0.9rem;color:var(--muted);">Use these actions when the semester ends to prepare the platform for the next batch.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <button class="btn btn-outline" onclick="runCleanup('calls_only')">1. Clear All Mock Call Submissions (Keep Teachers & Students)</button>
+              <button class="btn btn-warning" onclick="runCleanup('students_and_calls')">2. Remove All Students & Calls (Keep Teachers)</button>
+              <button class="btn btn-danger" onclick="runCleanup('full_reset')">3. Full Semester Reset (Remove All Teachers, Students & Calls)</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

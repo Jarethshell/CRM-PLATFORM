@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCS ProCRM | Login & Sign-Up</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>CCS ProCRM Platform</h1>
+        <p>Grade 11 CCS Crosstrack</p>
+      </div>
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" type="button">Sign In</button>
+        <button id="tab-signup" class="auth-tab" type="button">Create Account</button>
+      </div>
+      <div id="auth-alert" class="alert hidden"></div>
+
+      <form id="form-login">
+        <label style="font-size:0.85rem;font-weight:600;display:block;margin-bottom:6px;">Select Account Role</label>
+        <div class="role-selector" style="grid-template-columns: repeat(3, 1fr);">
+          <label class="role-option"><input type="radio" name="loginRole" value="student" checked /> Student</label>
+          <label class="role-option"><input type="radio" name="loginRole" value="teacher" /> Teacher</label>
+          <label class="role-option"><input type="radio" name="loginRole" value="admin" /> Admin</label>
+        </div>
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input id="login-email" type="email" class="form-control" placeholder="name@school.edu.ph" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" class="form-control" minlength="5" placeholder="Minimum 5 characters" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Login to Dashboard</button>
+      </form>
+
+      <form id="form-signup" class="hidden">
+        <label style="font-size:0.85rem;font-weight:600;display:block;margin-bottom:6px;">I am registering as a:</label>
+        <div class="role-selector">
+          <label class="role-option"><input type="radio" name="signupRole" value="student" checked /> Student</label>
+          <label class="role-option"><input type="radio" name="signupRole" value="teacher" /> Teacher</label>
+        </div>
+        <div id="group-passkey" class="form-group hidden">
+          <label for="signup-passkey">Teacher Access Passkey</label>
+          <input id="signup-passkey" type="password" class="form-control" placeholder="Enter faculty passkey" />
+        </div>
+        <div class="form-group">
+          <label for="signup-name">Full Name</label>
+          <input id="signup-name" type="text" class="form-control" placeholder="Juan Dela Cruz" required />
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email Address (Used for PDF Grade Reports)</label>
+          <input id="signup-email" type="email" class="form-control" placeholder="juan.delacruz@gmail.com" required />
+        </div>
+        <div class="form-group">
+          <label for="signup-section">Section / Department</label>
+          <input id="signup-section" type="text" class="form-control" placeholder="Grade 11 CCS Crosstrack" required />
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password (5+ Characters)</label>
+          <input id="signup-password" type="password" class="form-control" minlength="5" placeholder="Minimum 5 characters" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Register Account</button>
+      </form>
+
+      <details style="margin-top:16px;font-size:0.82rem;color:var(--muted);">
+        <summary style="cursor:pointer;">Desktop App / Server Sync URL (Optional)</summary>
+        <div style="margin-top:8px;">
+          <input id="server-url-input" type="url" class="form-control" placeholder="Leave blank for local, or https://your-site.onrender.com" />
+          <button id="btn-save-server-url" type="button" class="btn btn-outline" style="margin-top:6px;padding:6px 12px;font-size:0.8rem;">Save Server URL</button>
+        </div>
+      </details>
+    </div>
+  </div>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

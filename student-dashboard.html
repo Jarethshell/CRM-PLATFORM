@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Workspace | CCS ProCRM</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a href="/index.html?signin=true" class="brand" title="Back to Sign In"><h2>CCS ProCRM</h2><span>Student Agent Portal</span></a>
+      <button class="nav-btn active" data-view="view-simulator">AI Mock Call & CRM</button>
+      <button class="nav-btn" data-view="view-diagnostics">Typing & Mic Test</button>
+      <button class="nav-btn" data-view="view-crm">Call Logs & Offline Sync</button>
+      <button class="nav-btn" data-view="view-grades">Grades & QA Feedback</button>
+      <div class="sidebar-footer">
+        <div style="font-size:0.85rem;margin-bottom:10px;">
+          <strong id="student-name-display">Student</strong><br />
+          <span id="student-section-display" style="color:#94a3b8;font-size:0.78rem;">Grade 11 CCS Crosstrack</span>
+        </div>
+        <button id="btn-logout" class="btn btn-outline btn-full" style="background:#1e293b;color:#fff;border-color:#334155;">Sign Out</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <strong style="font-size:1.05rem;">Contact Center Agent Workstation</strong>
+        <div class="status-group">
+          <span id="network-badge" class="badge badge-online">Online - Connected</span>
+          <span id="sync-count-badge" class="badge badge-info">0 Pending Sync</span>
+        </div>
+      </header>
+
+      <div class="content">
+        <section id="view-simulator">
+          <div class="card">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between;">
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <div>
+                  <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:4px;">Call Language (AI Only)</label>
+                  <select id="lang-select" class="form-control" style="width:170px;">
+                    <option value="en">English (EN)</option>
+                    <option value="fil">Filipino (Tagalog)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:4px;">Mock Call Scenario</label>
+                  <select id="scenario-select" class="form-control" style="width:260px;">
+                    <option value="telco">Telco Fiber Internet Outage</option>
+                    <option value="billing">Mobile Plan Overcharge Dispute</option>
+                    <option value="ecommerce">Missing E-Commerce Parcel Refund</option>
+                    <option value="banking">Online Banking Password Lockout</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <span id="call-timer" style="font-weight:700;font-size:1.1rem;color:var(--primary);min-width:60px;">00:00</span>
+                <button id="btn-start-call" class="btn btn-success">Start Mock Call</button>
+                <button id="btn-hold-call" class="btn btn-warning hidden">Hold Call</button>
+                <button id="btn-end-call" class="btn btn-danger hidden">End & Save Ticket</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="metrics-strip">
+            <div><strong>Pace (WPM):</strong> <span id="live-wpm">0</span></div>
+            <div><strong>Empathy:</strong> <span id="live-empathy">0%</span></div>
+            <div><strong>Script:</strong> <span id="live-adherence">0%</span></div>
+            <div><strong>Hold Time:</strong> <span id="live-hold">0s</span></div>
+            <div><strong>Dead Air:</strong> <span id="live-deadair">0</span></div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <h3 class="card-title" style="margin:0;">Live AI Customer Conversation</h3>
+                <span id="rec-badge" class="badge badge-info hidden">Recording Voice...</span>
+              </div>
+              <div id="chat-transcript" class="chat-box">
+                <div style="text-align:center;color:var(--muted);margin:auto;">Select English or Filipino and click <strong>Start Mock Call</strong>.</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button id="btn-mic-toggle" class="btn btn-outline" type="button" disabled>Speak (Mic)</button>
+                <input id="agent-input" type="text" class="form-control" placeholder="Type or speak your agent spiel..." disabled />
+                <button id="btn-send-reply" class="btn btn-primary" type="button" disabled>Send</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Customer CRM Ticket Record</h3>
+              <div class="form-group"><label>Customer Name</label><input id="crm-cust-name" type="text" class="form-control" placeholder="Ask customer and type their full name..." /></div>
+              <div class="form-group"><label>Account Number</label><input id="crm-cust-account" type="text" class="form-control" placeholder="Ask customer and type account/order #..." /></div>
+              <div class="form-group">
+                <label>Issue Category</label>
+                <select id="crm-issue-cat" class="form-control">
+                  <option value="Technical Support">Technical Support</option>
+                  <option value="Billing & Dispute">Billing & Dispute</option>
+                  <option value="Order & Logistics">Order & Logistics</option>
+                  <option value="Account Security">Account Security</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Call Disposition</label>
+                <select id="crm-disposition" class="form-control">
+                  <option value="Resolved - First Call">Resolved - First Call</option>
+                  <option value="Escalated to Tier 2">Escalated to Tier 2</option>
+                  <option value="Follow-up Scheduled">Follow-up Scheduled</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Agent Resolution Notes</label><textarea id="crm-notes" rows="3" class="form-control" placeholder="Document verification, issue, and resolution..."></textarea></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-diagnostics" class="hidden">
+          <div class="grid-2">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 class="card-title" style="margin:0;">BPO Typing Speed & Accuracy Test</h3>
+                <span id="typing-counter" class="badge badge-info">Spiel 1 of 10 (English)</span>
+              </div>
+              <div id="typing-prompt" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px;user-select:none;"></div>
+              <div class="form-group"><textarea id="typing-input" rows="4" class="form-control" placeholder="Start typing the spiel above..."></textarea></div>
+              <div class="metrics-strip" style="margin-bottom:12px;">
+                <div><strong>Speed:</strong> <span id="typing-wpm">0 WPM</span></div>
+                <div><strong>Accuracy:</strong> <span id="typing-acc">100%</span></div>
+                <div><strong>Time:</strong> <span id="typing-time">0s</span></div>
+                <div><strong>Result:</strong> <span id="typing-status">Ready</span></div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button id="btn-typing-reset" class="btn btn-outline" type="button">Reset Test</button>
+                <button id="btn-typing-next" class="btn btn-primary" type="button">Next Practice Spiel</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Microphone & Speech Recognition Test</h3>
+              <p style="font-size:0.88rem;color:var(--muted);margin-top:0;"><strong>Step 1: Hardware Mic Level Check</strong></p>
+              <div style="background:#e2e8f0;height:18px;border-radius:999px;overflow:hidden;margin-bottom:10px;"><div id="mic-meter-fill" style="height:100%;width:0%;background:#16a34a;transition:width 0.08s;"></div></div>
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;">
+                <button id="btn-test-mic-start" class="btn btn-success" type="button">Start Mic Level Test</button>
+                <button id="btn-test-mic-stop" class="btn btn-danger hidden" type="button">Stop Mic</button>
+                <span id="mic-test-status" style="font-size:0.85rem;color:var(--muted);">Click Start and speak normally.</span>
+              </div>
+              <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;" />
+              <p style="font-size:0.88rem;color:var(--muted);"><strong>Step 2: Speech-to-Text Test</strong> (Chrome/Edge + Internet)</p>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <select id="speech-test-lang" class="form-control" style="width:160px;"><option value="en-US">English (en-US)</option><option value="fil-PH">Filipino (fil-PH)</option></select>
+                <button id="btn-test-speech" class="btn btn-primary" type="button">Test Voice-to-Text</button>
+              </div>
+              <div id="speech-test-output" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px;min-height:60px;font-size:0.9rem;margin-bottom:14px;">Recognized speech will appear here...</div>
+              <button id="btn-test-speaker" class="btn btn-outline" type="button">Play Sample AI Customer Voice</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-crm" class="hidden">
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap;">
+              <h3 class="card-title" style="margin:0;">CRM Call History & Sync Queue</h3>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <input id="search-crm-logs" type="text" class="form-control" style="width:200px;" placeholder="Search scenario/account..." />
+                <button id="btn-force-sync" class="btn btn-primary">Sync Now</button>
+                <button id="btn-student-clear-pending" class="btn btn-danger">Clear Pending</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date/Time</th><th>Scenario</th><th>Lang</th><th>CRM Ticket</th><th>AHT / Hold</th><th>Auto QA</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody id="crm-records-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-grades" class="hidden">
+          <div class="card"><h3 class="card-title">Teacher Evaluations & Sent Email Reports</h3><div id="student-grades-list"></div></div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="/js/db-sync.js"></script>
+  <script src="/js/ai-call-engine.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>

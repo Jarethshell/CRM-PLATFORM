@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Evaluator | CCS ProCRM</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a href="/index.html?signin=true" class="brand" title="Back to Sign In"><h2>CCS ProCRM</h2><span>Teacher QA & Grading</span></a>
+      <button class="nav-btn active" data-view="view-submissions">Mock Call Submissions</button>
+      <button class="nav-btn" data-view="view-students">Student Directory</button>
+      <div class="sidebar-footer">
+        <div style="font-size:0.85rem;margin-bottom:10px;"><strong id="teacher-name-display">Teacher</strong><br /><span style="color:#94a3b8;font-size:0.78rem;">CCS Instructor</span></div>
+        <button id="btn-logout" class="btn btn-outline btn-full" style="background:#1e293b;color:#fff;border-color:#334155;">Sign Out</button>
+      </div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar">
+        <strong style="font-size:1.05rem;">Quality Assurance & Student Performance Dashboard</strong>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button id="btn-export-csv" class="btn btn-success">Export Grades (CSV)</button>
+          <button id="btn-refresh-data" class="btn btn-outline">Refresh Live Data</button>
+        </div>
+      </header>
+      <div class="content">
+        <div class="grid-4">
+          <div class="stat-box"><small>Total Mock Calls</small><h3 id="stat-total-calls">0</h3></div>
+          <div class="stat-box"><small>Pending Grading</small><h3 id="stat-pending-grades">0</h3></div>
+          <div class="stat-box"><small>Class Average Score</small><h3 id="stat-avg-score">0%</h3></div>
+          <div class="stat-box"><small>Registered Students</small><h3 id="stat-total-students">0</h3></div>
+        </div>
+        <section id="view-submissions">
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap;">
+              <h3 class="card-title" style="margin:0;">Student Mock Call Submissions</h3>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <input id="search-submissions" type="text" class="form-control" style="width:210px;" placeholder="Search student, scenario..." />
+                <select id="filter-status" class="form-control" style="width:180px;"><option value="all">All Submissions</option><option value="pending_grade">Pending Grading</option><option value="graded">Graded & Emailed</option></select>
+                <button id="btn-clear-pending" class="btn btn-danger" type="button">Clear All Pending</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Student Name</th><th>Scenario</th><th>Lang</th><th>Auto QA Metrics</th><th>Status</th><th>Score</th><th>Action</th></tr></thead>
+                <tbody id="submissions-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section id="view-students" class="hidden">
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap;">
+              <h3 class="card-title" style="margin:0;">Registered Grade 11 CCS Crosstrack Students</h3>
+              <input id="search-students" type="text" class="form-control" style="width:230px;" placeholder="Search name or section..." />
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Full Name</th><th>Email Address</th><th>Section</th><th>Registered Date</th><th>Action</th></tr></thead>
+                <tbody id="students-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div id="grade-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="margin:0;color:var(--primary);">Evaluate Call & Email Student Report</h3>
+        <button id="btn-close-modal" class="btn btn-outline">Close</button>
+      </div>
+      <div id="modal-call-details" style="font-size:0.9rem;margin-bottom:10px;"></div>
+      <div id="modal-audio-wrap" style="margin-bottom:12px;"></div>
+      <div id="modal-transcript" class="chat-box" style="height:200px;"></div>
+      <form id="form-grade">
+        <div class="grid-4">
+          <div class="form-group"><label>Communication (0-25)</label><input id="grade-comm" type="number" min="0" max="25" class="form-control rubric-input" value="20" required /></div>
+          <div class="form-group"><label>Empathy & Tone (0-25)</label><input id="grade-empathy" type="number" min="0" max="25" class="form-control rubric-input" value="20" required /></div>
+          <div class="form-group"><label>CRM Accuracy (0-25)</label><input id="grade-crm" type="number" min="0" max="25" class="form-control rubric-input" value="20" required /></div>
+          <div class="form-group"><label>Resolution (0-25)</label><input id="grade-res" type="number" min="0" max="25" class="form-control rubric-input" value="20" required /></div>
+        </div>
+        <div class="form-group">
+          <label>Total Grade: <strong id="grade-total-display" style="color:var(--success);font-size:1.1rem;">80 / 100</strong></label>
+          <textarea id="teacher-feedback" rows="3" class="form-control" placeholder="Write constructive feedback..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Save Grade & Email PDF Report</button>
+      </form><div id="modal-pdf-wrap" style="margin-top:10px;"></div>
+    </div>
+  </div>
+  <script src="/js/teacher.js"></script>
+</body>
+</html>

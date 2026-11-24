@@ -1,0 +1,38 @@
+{
+  "name": "ccs-crm-capstone",
+  "version": "1.0.0",
+  "description": "Grade 12 Contact Center Services CRM & Offline AI Mock Call Platform",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "node server.js",
+    "electron": "electron .",
+    "build-win": "electron-builder --win"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nodemailer": "^10.6.0",
+    "pdfkit": "^0.20.2"
+  },
+  "devDependencies": {
+    "electron": "^45.3.3",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.ccs.grade11.crm",
+    "productName": "CCS ProCRM Simulator",
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "electron-main.js",
+      "server.js",
+      "database.json",
+      "public/**/*"
+    ]
+  },
+  "allowScripts": {
+    "electron@31.7.7": true,
+    "electron-winstaller@5.4.0": true
+  }
+}
